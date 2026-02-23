@@ -1,0 +1,17 @@
+name: PR Preview
+
+on:
+  pull_request: {}
+
+jobs:
+  publish_update:
+    name: Publish App Preview
+    type: update
+    params:
+      branch: ${{ github.ref_name }}
+      message: 'PR update for ${{ github.ref_name }}'
+      
+  comment_on_pr:
+    name: Post Preview to PR
+    after: [publish_update]
+    type: github-comment
