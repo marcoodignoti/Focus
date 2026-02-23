@@ -61,8 +61,9 @@ export const ModeSelector: React.FC<ModeSelectorProps> = ({ mode, icon, onPress,
       onPressOut={handlePressOut}
     >
       <GlassBackground
-        style={StyleSheet.absoluteFill}
+        style={[StyleSheet.absoluteFill, { margin: -2 }]}
         glassStyle="clear"
+        tintColor="transparent"
         tint="light"
         intensity={20}
         fallbackColor="rgba(255, 255, 255, 0.15)"
@@ -79,8 +80,6 @@ const styles = StyleSheet.create({
     cornerCurve: 'continuous',
     maxWidth: 220, // Give some constraint for long text
     overflow: 'hidden', // Ensures BlurView stays within pill
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
   },
   innerContainer: {
     flexDirection: 'row',

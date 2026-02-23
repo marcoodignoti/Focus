@@ -124,7 +124,6 @@ const AnimatedOverlayItem: React.FC<AnimatedOverlayItemProps> = ({
             ref={viewRef}
             collapsable={false}
             style={[{
-                opacity: hidden ? 0 : opacityAnim,
                 transform: [{ translateY: translateYAnim }, { scale: scaleAnim }],
                 borderRadius: 34,
                 marginBottom: 12,
@@ -132,35 +131,36 @@ const AnimatedOverlayItem: React.FC<AnimatedOverlayItemProps> = ({
                 cornerCurve: 'continuous',
                 overflow: 'hidden',
                 backgroundColor: 'transparent',
-                ...(glassEffect ? {
-                    borderWidth: StyleSheet.hairlineWidth,
-                    borderColor: 'rgba(255, 255, 255, 0.1)',
-                } : {}),
             }, style]}>
             {!hidden && glassEffect && (
                 <GlassBackground
-                    style={StyleSheet.absoluteFill}
+                    animated={true}
+                    visible={visible}
+                    fadeDuration={300}
+                    style={[StyleSheet.absoluteFill, { margin: -2 }]}
                     glassStyle="clear"
                     tint={isActive ? 'light' : 'dark'}
                     intensity={80}
                     fallbackColor={isActive ? 'rgba(255, 255, 255, 0.15)' : 'rgba(50, 50, 60, 0.85)'}
                 />
             )}
-            <Pressable
-                style={[{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    paddingHorizontal: 24,
-                    height: 68,
-                }, contentStyle]}
-                onPress={onPress}
-                onPressIn={handlePressIn}
-                onPressOut={handlePressOut}
-            >
-                {children}
-            </Pressable>
-            {expandedContent}
-        </Animated.View>
+            <Animated.View style={{ opacity: hidden ? 0 : opacityAnim, width: '100%' }}>
+                <Pressable
+                    style={[{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        paddingHorizontal: 24,
+                        height: 68,
+                    }, contentStyle]}
+                    onPress={onPress}
+                    onPressIn={handlePressIn}
+                    onPressOut={handlePressOut}
+                >
+                    {children}
+                </Pressable>
+                {expandedContent}
+            </Animated.View>
+        </Animated.View >
     );
 };
 
@@ -278,15 +278,16 @@ export const ModeSelectionOverlay: React.FC<ModeSelectionOverlayProps> = ({
             style={[StyleSheet.absoluteFill, { zIndex: 100 }]}
             pointerEvents={visible ? 'auto' : 'none'}
         >
-            <Animated.View style={[StyleSheet.absoluteFill, { opacity: fadeAnim }]}>
-                <GlassBackground
-                    style={StyleSheet.absoluteFill}
-                    glassStyle="regular"
-                    tint="dark"
-                    intensity={95}
-                    fallbackColor="rgba(30, 30, 35, 0.95)"
-                />
-            </Animated.View>
+            <GlassBackground
+                animated={true}
+                visible={visible}
+                fadeDuration={visible ? 300 : 250}
+                style={StyleSheet.absoluteFill}
+                glassStyle="regular"
+                tint="dark"
+                intensity={95}
+                fallbackColor="rgba(30, 30, 35, 0.95)"
+            />
 
             <View style={styles.container} pointerEvents="box-none">
                 <ScrollView

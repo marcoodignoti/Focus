@@ -45,8 +45,9 @@ export const StartButton: React.FC<StartButtonProps> = ({ label, onPress, style 
             onPressOut={handlePressOut}
         >
             <GlassBackground
-                style={StyleSheet.absoluteFill}
+                style={[StyleSheet.absoluteFill, { margin: -2 }]}
                 glassStyle="clear"
+                tintColor="transparent"
                 tint="light"
                 intensity={20}
                 fallbackColor="rgba(255, 255, 255, 0.2)"
@@ -62,8 +63,6 @@ const styles = StyleSheet.create({
         // @ts-ignore: cornerCurve is a valid iOS prop since RN 0.73
         cornerCurve: 'continuous',
         overflow: 'hidden',
-        borderWidth: StyleSheet.hairlineWidth,
-        borderColor: 'rgba(255, 255, 255, 0.1)',
     },
     innerContainer: {
         paddingVertical: 16,

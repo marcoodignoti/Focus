@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 const initialModes: FocusMode[] = [
     { id: '1', name: 'Study', duration: 35, icon: 'book' },
     { id: '2', name: 'Work', duration: 45, icon: 'briefcase' },
-    { id: '3', name: 'Focus', duration: 15, icon: 'fitness' },
+    { id: '3', name: 'Focus', duration: 15, icon: 'cafe' },
     { id: '4', name: 'Fitness', duration: 45, icon: 'barbell' },
     { id: '5', name: 'Read', duration: 20, icon: 'library' },
 ];

@@ -64,14 +64,17 @@ export const RulerOverlay: React.FC<RulerOverlayProps> = ({
     if (!shouldRender) return null;
 
     return (
-        <Animated.View
+        <View
             style={[
                 styles.fullScreenContainer,
-                { opacity: fadeAnim, paddingTop: insets.top, paddingBottom: Math.max(insets.bottom, 20) }
+                { paddingTop: insets.top, paddingBottom: Math.max(insets.bottom, 20) }
             ]}
             pointerEvents={visible ? 'auto' : 'none'}
         >
             <GlassBackground
+                animated={true}
+                visible={visible}
+                fadeDuration={visible ? 350 : 250}
                 style={StyleSheet.absoluteFill}
                 glassStyle="regular"
                 tint="dark"
@@ -82,7 +85,7 @@ export const RulerOverlay: React.FC<RulerOverlayProps> = ({
             <Animated.View
                 style={[
                     styles.content,
-                    { transform: [{ translateY: slideAnim }] }
+                    { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }
                 ]}
             >
                 <Text style={styles.title}>Adjust timer</Text>
@@ -110,7 +113,7 @@ export const RulerOverlay: React.FC<RulerOverlayProps> = ({
                     </Pressable>
                 </View>
             </Animated.View>
-        </Animated.View>
+        </View>
     );
 };
 
