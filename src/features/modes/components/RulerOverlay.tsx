@@ -64,6 +64,8 @@ export const RulerOverlay: React.FC<RulerOverlayProps> = ({
         initialValueRef.current = initialValue;
     }, [initialValue]);
 
+    const deferredFrameRef = useRef<number | null>(null);
+
     const handleClose = () => {
         'worklet';
         opacity.value = withTiming(0, { duration: 250 });
@@ -90,11 +92,15 @@ export const RulerOverlay: React.FC<RulerOverlayProps> = ({
 
             // Defer RulerPicker mount to avoid initializing 120 animated ticks
             // during the opening spring animation
-            const id = requestAnimationFrame(() => {
+            deferredFrameRef.current = requestAnimationFrame(() => {
+                deferredFrameRef.current = null;
                 setIsContentReady(true);
             });
-            return () => cancelAnimationFrame(id);
         } else {
+            if (deferredFrameRef.current !== null) {
+                cancelAnimationFrame(deferredFrameRef.current);
+                deferredFrameRef.current = null;
+            }
             handleClose();
         }
     }, [visible]);
