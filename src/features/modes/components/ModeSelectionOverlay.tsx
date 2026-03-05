@@ -570,8 +570,6 @@ const styles = StyleSheet.create({
     modeDurationActive: {
         opacity: 0.8,
         color: '#000000',
-        marginTop: 2,
-        fontSize: 14,
     },
     modeRowRight: {
         width: '20%' as const,

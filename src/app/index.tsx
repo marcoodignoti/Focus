@@ -72,6 +72,7 @@ function OverlayLayer() {
                 <RulerOverlay
                     visible={isRulerVisible}
                     onClose={() => {
+                        // Safe to unmount: onClose fires after close animation completes
                         setRulerVisible(false);
                         setRulerMounted(false);
                     }}
