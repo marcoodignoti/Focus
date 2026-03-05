@@ -41,6 +41,8 @@ export const RulerOverlay: React.FC<RulerOverlayProps> = ({
     const sharedValue = useSharedValue(initialValue);
 
     const [shouldRender, setShouldRender] = useState(visible);
+    // Defer heavy content (RulerPicker) until open animation has had time to start
+    const [isContentReady, setIsContentReady] = useState(false);
 
     // Ref to mirror sharedValue on JS thread without reading .value during render
     const sharedValueRef = useRef(initialValue);
@@ -62,12 +64,15 @@ export const RulerOverlay: React.FC<RulerOverlayProps> = ({
         initialValueRef.current = initialValue;
     }, [initialValue]);
 
+    const deferredFrameRef = useRef<number | null>(null);
+
     const handleClose = () => {
         'worklet';
         opacity.value = withTiming(0, { duration: 250 });
         translateY.value = withTiming(SCREEN_HEIGHT, { duration: 300 }, (finished) => {
             if (finished) {
                 runOnJS(setShouldRender)(false);
+                runOnJS(setIsContentReady)(false);
                 runOnJS(onClose)();
             }
         });
@@ -84,7 +89,18 @@ export const RulerOverlay: React.FC<RulerOverlayProps> = ({
                 stiffness: 90,
                 mass: 1,
             });
+
+            // Defer RulerPicker mount to avoid initializing 120 animated ticks
+            // during the opening spring animation
+            deferredFrameRef.current = requestAnimationFrame(() => {
+                deferredFrameRef.current = null;
+                setIsContentReady(true);
+            });
         } else {
+            if (deferredFrameRef.current !== null) {
+                cancelAnimationFrame(deferredFrameRef.current);
+                deferredFrameRef.current = null;
+            }
             handleClose();
         }
     }, [visible]);
@@ -134,13 +150,15 @@ export const RulerOverlay: React.FC<RulerOverlayProps> = ({
                 </View>
 
                 <View style={styles.rulerWrapper}>
-                    <RulerPicker
-                        key={initialValue}
-                        containerWidth={SCREEN_WIDTH - 64}
-                        initialValue={initialValue}
-                        sharedValue={sharedValue}
-                        height={100}
-                    />
+                    {isContentReady ? (
+                        <RulerPicker
+                            key={initialValue}
+                            containerWidth={SCREEN_WIDTH - 64}
+                            initialValue={initialValue}
+                            sharedValue={sharedValue}
+                            height={100}
+                        />
+                    ) : null}
                 </View>
 
                 <View style={styles.bottomContainer}>

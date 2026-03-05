@@ -43,7 +43,7 @@ export default function AddSessionScreen() {
         return d;
     });
 
-    const { gesture, closeWithAnimation, animatedSheetStyle, animatedBackdropStyle } = useSheetAnimation(() => {
+    const { gesture, closeWithAnimation, animatedSheetStyle, animatedBackdropStyle, isReady } = useSheetAnimation(() => {
         router.back();
     });
 
@@ -158,22 +158,24 @@ export default function AddSessionScreen() {
             <View style={styles.inputSection}>
                 <Text style={styles.sectionLabel}>Ora di inizio</Text>
                 <View style={styles.timePickerContainer}>
-                    <DateTimePicker
-                        value={startTime}
-                        mode="time"
-                        display="spinner"
-                        onChange={(_, selectedDate) => {
-                            if (selectedDate) {
-                                // Keep the base date, update time only
-                                const newDate = new Date(baseDate);
-                                newDate.setHours(selectedDate.getHours(), selectedDate.getMinutes(), 0, 0);
-                                setStartTime(newDate);
-                            }
-                        }}
-                        themeVariant="dark"
-                        style={styles.timePicker}
-                        locale="it-IT"
-                    />
+                    {isReady ? (
+                        <DateTimePicker
+                            value={startTime}
+                            mode="time"
+                            display="spinner"
+                            onChange={(_, selectedDate) => {
+                                if (selectedDate) {
+                                    // Keep the base date, update time only
+                                    const newDate = new Date(baseDate);
+                                    newDate.setHours(selectedDate.getHours(), selectedDate.getMinutes(), 0, 0);
+                                    setStartTime(newDate);
+                                }
+                            }}
+                            themeVariant="dark"
+                            style={styles.timePicker}
+                            locale="it-IT"
+                        />
+                    ) : null}
                 </View>
             </View>
 
@@ -188,12 +190,14 @@ export default function AddSessionScreen() {
                     />
                 </View>
                 <View style={styles.rulerContainer}>
-                    <RulerPicker
-                        containerWidth={SCREEN_WIDTH - 64}
-                        initialValue={selectedMode.duration}
-                        sharedValue={sharedDuration}
-                        height={100}
-                    />
+                    {isReady ? (
+                        <RulerPicker
+                            containerWidth={SCREEN_WIDTH - 64}
+                            initialValue={selectedMode.duration}
+                            sharedValue={sharedDuration}
+                            height={100}
+                        />
+                    ) : null}
                 </View>
             </View>
         </View>
