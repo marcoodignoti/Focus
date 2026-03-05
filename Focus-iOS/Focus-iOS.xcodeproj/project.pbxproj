@@ -1,0 +1,426 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8D3A23AA04654FD28FC14CDB /* FocusApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F62000DFC54865A86DF376 /* FocusApp.swift */; };
+		E98ECF59996642DCAE6FA079 /* FocusMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C47A49DF87441CDA2303322 /* FocusMode.swift */; };
+		EE26F6C8A75A4D5196A4B670 /* FocusSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = F730B412E5C64FB2A193B488 /* FocusSession.swift */; };
+		058026B689824952A784A526 /* FocusModesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438CAAA64CE641B88E2E59C2 /* FocusModesStore.swift */; };
+		D462652EC421400AAEC2F457 /* FocusHistoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BBE7D8EEFB416295B0D446 /* FocusHistoryStore.swift */; };
+		D8FC9D36E75942659AB5D602 /* UIStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A83A60844A40A8A6061AEA /* UIStateStore.swift */; };
+		3A20139FCE3B41C6A4000839 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA740419B524EA8BBB7DD01 /* Constants.swift */; };
+		A04C64A5F71941529B830E95 /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93138AADF2547D19D3E872B /* Color+Hex.swift */; };
+		76C20C55719D42A2A76FFB34 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E4CE53458840DBBEA29F9D /* HapticManager.swift */; };
+		FBFF5530D744496CBD5A8D88 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8071A3CBC647455C85B8376F /* ContentView.swift */; };
+		C87098EAF2724779926CDD5B /* GlassCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEE408B5B62445CA9E6DAE2 /* GlassCard.swift */; };
+		D3EEE995EBA04539BD5B0017 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F105F0BCC944B948204A1B6 /* TimerView.swift */; };
+		DF3B1613104C4044A0B61772 /* TimerDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6F315D450B449396F89957 /* TimerDisplayView.swift */; };
+		F950E43B2081414A9A694293 /* StartButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5550C31EC144302B76A0C9E /* StartButtonView.swift */; };
+		5022213EE59B46BEA87BA97A /* ModeSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A69BF6ABF3DD4121A6242B5D /* ModeSelectorView.swift */; };
+		7F1568FFDB484D64A30ADFA1 /* ModeSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6CEC2F33A84F779189EA1F /* ModeSelectionView.swift */; };
+		3A85D877C2EF47ADBA54D247 /* NewModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C62EBAAE3B24F16BD68A986 /* NewModeView.swift */; };
+		C14269608E1D4148985B5F03 /* RenameModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DCAF4730BF4C458477A8E2 /* RenameModeView.swift */; };
+		49250CBD735441B384652261 /* RulerPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F43F74DE78048F49FEF2DA2 /* RulerPickerView.swift */; };
+		2CAB25E31A6C45BBA1020448 /* RulerOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD81BBC53494315BE983D55 /* RulerOverlayView.swift */; };
+		96BBF70DE67F4E4A8E79FB12 /* FocusCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEE2DA268B644A5971F67EB /* FocusCalendarView.swift */; };
+		2C5D6DAEDDF64DB4915667A9 /* AddSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83397221BBD451FBFC651DC /* AddSessionView.swift */; };
+		3CAB3A4CE94F4C309C04B314 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7FEA128B5F404611994DE7DD /* Info.plist */; };
+		AC2F7521FC9D4796AE53469A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E102CAF16BA42309B8B2D00 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		F3F62000DFC54865A86DF376 /* FocusApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusApp.swift; sourceTree = "<group>"; };
+		7C47A49DF87441CDA2303322 /* FocusMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusMode.swift; sourceTree = "<group>"; };
+		F730B412E5C64FB2A193B488 /* FocusSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusSession.swift; sourceTree = "<group>"; };
+		438CAAA64CE641B88E2E59C2 /* FocusModesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusModesStore.swift; sourceTree = "<group>"; };
+		57BBE7D8EEFB416295B0D446 /* FocusHistoryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusHistoryStore.swift; sourceTree = "<group>"; };
+		F0A83A60844A40A8A6061AEA /* UIStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStateStore.swift; sourceTree = "<group>"; };
+		ECA740419B524EA8BBB7DD01 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		D93138AADF2547D19D3E872B /* Color+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color+Hex.swift; sourceTree = "<group>"; };
+		B9E4CE53458840DBBEA29F9D /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
+		8071A3CBC647455C85B8376F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		FCEE408B5B62445CA9E6DAE2 /* GlassCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassCard.swift; sourceTree = "<group>"; };
+		5F105F0BCC944B948204A1B6 /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
+		FE6F315D450B449396F89957 /* TimerDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerDisplayView.swift; sourceTree = "<group>"; };
+		B5550C31EC144302B76A0C9E /* StartButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartButtonView.swift; sourceTree = "<group>"; };
+		A69BF6ABF3DD4121A6242B5D /* ModeSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeSelectorView.swift; sourceTree = "<group>"; };
+		5F6CEC2F33A84F779189EA1F /* ModeSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeSelectionView.swift; sourceTree = "<group>"; };
+		3C62EBAAE3B24F16BD68A986 /* NewModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewModeView.swift; sourceTree = "<group>"; };
+		E1DCAF4730BF4C458477A8E2 /* RenameModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameModeView.swift; sourceTree = "<group>"; };
+		4F43F74DE78048F49FEF2DA2 /* RulerPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulerPickerView.swift; sourceTree = "<group>"; };
+		9FD81BBC53494315BE983D55 /* RulerOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulerOverlayView.swift; sourceTree = "<group>"; };
+		5EEE2DA268B644A5971F67EB /* FocusCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusCalendarView.swift; sourceTree = "<group>"; };
+		F83397221BBD451FBFC651DC /* AddSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSessionView.swift; sourceTree = "<group>"; };
+		7FEA128B5F404611994DE7DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1E102CAF16BA42309B8B2D00 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CE8932F658B448968B8703AF /* Focus-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Focus-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+
+		95084665581840FCBCCFCD25 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+
+/* Begin PBXGroup section */
+
+		55E42D90304F4BE2B2AE3C8D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7C47A49DF87441CDA2303322,
+				F730B412E5C64FB2A193B488,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+
+		43EEA63AF4804560BD9F7158 /* Stores */ = {
+			isa = PBXGroup;
+			children = (
+				438CAAA64CE641B88E2E59C2,
+				57BBE7D8EEFB416295B0D446,
+				F0A83A60844A40A8A6061AEA,
+			);
+			path = Stores;
+			sourceTree = "<group>";
+		};
+
+		2151201158614244ACD8A63D /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				ECA740419B524EA8BBB7DD01,
+				D93138AADF2547D19D3E872B,
+				B9E4CE53458840DBBEA29F9D,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+
+		3874058042054CFF8477E88E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8071A3CBC647455C85B8376F,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+
+		1FB9CC819DF84D3A82F758F6 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				FCEE408B5B62445CA9E6DAE2,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+
+		881005B972D24FAABD5BD2C9 /* Timer */ = {
+			isa = PBXGroup;
+			children = (
+				5F105F0BCC944B948204A1B6,
+				FE6F315D450B449396F89957,
+				B5550C31EC144302B76A0C9E,
+				A69BF6ABF3DD4121A6242B5D,
+			);
+			path = Timer;
+			sourceTree = "<group>";
+		};
+
+		1817B21E27A6449B89626C35 /* Modes */ = {
+			isa = PBXGroup;
+			children = (
+				5F6CEC2F33A84F779189EA1F,
+				3C62EBAAE3B24F16BD68A986,
+				E1DCAF4730BF4C458477A8E2,
+				4F43F74DE78048F49FEF2DA2,
+				9FD81BBC53494315BE983D55,
+			);
+			path = Modes;
+			sourceTree = "<group>";
+		};
+
+		6D7DBD31F197429F9CDDE55A /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				5EEE2DA268B644A5971F67EB,
+				F83397221BBD451FBFC651DC,
+			);
+			path = Calendar;
+			sourceTree = "<group>";
+		};
+
+		3874058042054CFF8477E88E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8071A3CBC647455C85B8376F,
+				1FB9CC819DF84D3A82F758F6,
+				881005B972D24FAABD5BD2C9,
+				1817B21E27A6449B89626C35,
+				6D7DBD31F197429F9CDDE55A,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+
+		6AA669AAD7E5468092548B71 /* Focus-iOS */ = {
+			isa = PBXGroup;
+			children = (
+				F3F62000DFC54865A86DF376,
+				7FEA128B5F404611994DE7DD,
+				1E102CAF16BA42309B8B2D00,
+				55E42D90304F4BE2B2AE3C8D,
+				43EEA63AF4804560BD9F7158,
+				2151201158614244ACD8A63D,
+				3874058042054CFF8477E88E,
+			);
+			path = Focus-iOS;
+			sourceTree = "<group>";
+		};
+
+		C3513F8EA00C4D08810959DB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CE8932F658B448968B8703AF,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+
+		16BC8803A06D4C1CA3E76828 = {
+			isa = PBXGroup;
+			children = (
+				6AA669AAD7E5468092548B71 /* Focus-iOS */,
+				C3513F8EA00C4D08810959DB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CB5ACCFC6A474CEB8EAC3FB1 /* Focus-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E48A8A9A74364E33B201D2AF /* Build configuration list for PBXNativeTarget "Focus-iOS" */;
+			buildPhases = (
+				09574F40A7AC48CBAE6F5443 /* Sources */,
+				95084665581840FCBCCFCD25 /* Frameworks */,
+				76AC8AFC8F20478A84BE91F4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Focus-iOS";
+			packageProductDependencies = (
+			);
+			productName = "Focus-iOS";
+			productReference = CE8932F658B448968B8703AF /* Focus-iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1EC1350F6A7B4C528CCC9940 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1530;
+				LastUpgradeCheck = 1530;
+				TargetAttributes = {
+					CB5ACCFC6A474CEB8EAC3FB1 = {
+						CreatedOnToolsVersion = 15.3;
+					};
+				};
+			};
+			buildConfigurationList = C9CE6DD44ADF4054AE5100CE /* Build configuration list for PBXProject "Focus-iOS" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 16BC8803A06D4C1CA3E76828;
+			productRefGroup = C3513F8EA00C4D08810959DB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CB5ACCFC6A474CEB8EAC3FB1 /* Focus-iOS */,
+			);
+		};
+/* End PBXProject section */
+
+
+		09574F40A7AC48CBAE6F5443 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D3A23AA04654FD28FC14CDB /* FocusApp.swift in Sources */,
+				E98ECF59996642DCAE6FA079 /* FocusMode.swift in Sources */,
+				EE26F6C8A75A4D5196A4B670 /* FocusSession.swift in Sources */,
+				058026B689824952A784A526 /* FocusModesStore.swift in Sources */,
+				D462652EC421400AAEC2F457 /* FocusHistoryStore.swift in Sources */,
+				D8FC9D36E75942659AB5D602 /* UIStateStore.swift in Sources */,
+				3A20139FCE3B41C6A4000839 /* Constants.swift in Sources */,
+				A04C64A5F71941529B830E95 /* Color+Hex.swift in Sources */,
+				76C20C55719D42A2A76FFB34 /* HapticManager.swift in Sources */,
+				FBFF5530D744496CBD5A8D88 /* ContentView.swift in Sources */,
+				C87098EAF2724779926CDD5B /* GlassCard.swift in Sources */,
+				D3EEE995EBA04539BD5B0017 /* TimerView.swift in Sources */,
+				DF3B1613104C4044A0B61772 /* TimerDisplayView.swift in Sources */,
+				F950E43B2081414A9A694293 /* StartButtonView.swift in Sources */,
+				5022213EE59B46BEA87BA97A /* ModeSelectorView.swift in Sources */,
+				7F1568FFDB484D64A30ADFA1 /* ModeSelectionView.swift in Sources */,
+				3A85D877C2EF47ADBA54D247 /* NewModeView.swift in Sources */,
+				C14269608E1D4148985B5F03 /* RenameModeView.swift in Sources */,
+				49250CBD735441B384652261 /* RulerPickerView.swift in Sources */,
+				2CAB25E31A6C45BBA1020448 /* RulerOverlayView.swift in Sources */,
+				96BBF70DE67F4E4A8E79FB12 /* FocusCalendarView.swift in Sources */,
+				2C5D6DAEDDF64DB4915667A9 /* AddSessionView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+
+
+		76AC8AFC8F20478A84BE91F4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3CAB3A4CE94F4C309C04B314 /* Info.plist in Resources */,
+				AC2F7521FC9D4796AE53469A /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+
+/* Begin XCBuildConfiguration section */
+
+		69980D8864AC433BB95E959C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSET_CATALOG_COMPILER_OPTIMIZATION = space;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Debug;
+		};
+
+		5DDA72306A9F49AE922EA541 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSET_CATALOG_COMPILER_OPTIMIZATION = space;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = s;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+
+		FEFBFDA5E9374E28BF7D9E62 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSET_CATALOG_COMPILER_OPTIMIZATION = space;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Focus-iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LE_ENABLE_BITCODE = NO;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.focus.app";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+
+		D3DA0C8DB6D24107BD224D83 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSET_CATALOG_COMPILER_OPTIMIZATION = space;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Focus-iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LE_ENABLE_BITCODE = NO;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.focus.app";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C9CE6DD44ADF4054AE5100CE /* Build configuration list for PBXProject "Focus-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				69980D8864AC433BB95E959C /* Debug */,
+				5DDA72306A9F49AE922EA541 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E48A8A9A74364E33B201D2AF /* Build configuration list for PBXNativeTarget "Focus-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FEFBFDA5E9374E28BF7D9E62 /* Debug */,
+				D3DA0C8DB6D24107BD224D83 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+	};
+	rootObject = 1EC1350F6A7B4C528CCC9940 /* Project object */;
+}
