@@ -1,0 +1,101 @@
+name: Expo Go Preview
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+env:
+  EXPO_PROJECT_ID: ae2006b2-9409-4104-b563-2adaf1281420
+
+jobs:
+  update:
+    name: Publish EAS Update
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: read
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Publish EAS Update
+        id: update
+        run: |
+          eas update \
+            --branch pr-${{ github.event.pull_request.number }} \
+            --message "Preview for PR #${{ github.event.pull_request.number }}: ${{ github.event.pull_request.title }}" \
+            --non-interactive \
+            --json \
+            > update-output.json
+          UPDATE_GROUP_ID=$(jq -r '.[0].group // empty' update-output.json)
+          if [ -z "$UPDATE_GROUP_ID" ]; then
+            echo "Error: Could not parse update group ID from EAS output"
+            cat update-output.json
+            exit 1
+          fi
+          echo "update_group_id=$UPDATE_GROUP_ID" >> "$GITHUB_OUTPUT"
+
+      - name: Comment on PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const groupId = '${{ steps.update.outputs.update_group_id }}';
+            const branch = 'pr-${{ github.event.pull_request.number }}';
+            const qrUrl = `https://qr.expo.dev/eas-update?updateId=${groupId}&appScheme=exp&host=u.expo.dev`;
+            const dashboardUrl = `https://expo.dev/accounts/${context.repo.owner}/projects/${context.repo.repo}/updates?branch=${branch}`;
+
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+
+            const botComment = comments.find(
+              (c) => c.user.type === 'Bot' && c.body.includes('<!-- expo-preview -->')
+            );
+
+            const body = [
+              '<!-- expo-preview -->',
+              '## Expo Go Preview 📱',
+              '',
+              'Scan the QR code below with the **Expo Go** app to preview this pull request.',
+              '',
+              `![QR Code](${qrUrl})`,
+              '',
+              `| | |`,
+              `|---|---|`,
+              `| **Branch** | \`${branch}\` |`,
+              `| **Update group** | \`${groupId}\` |`,
+              `| **Dashboard** | [View on Expo](${dashboardUrl}) |`,
+            ].join('\n');
+
+            if (botComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body,
+              });
+            }
