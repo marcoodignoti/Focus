@@ -62,6 +62,7 @@
 /* End PBXFileReference section */
 
 
+/* Begin PBXFrameworksBuildPhase section */
 		95084665581840FCBCCFCD25 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -69,6 +70,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 
@@ -101,15 +103,6 @@
 				B9E4CE53458840DBBEA29F9D,
 			);
 			path = Utils;
-			sourceTree = "<group>";
-		};
-
-		3874058042054CFF8477E88E /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				8071A3CBC647455C85B8376F,
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 
@@ -258,6 +251,7 @@
 /* End PBXProject section */
 
 
+/* Begin PBXSourcesBuildPhase section */
 		09574F40A7AC48CBAE6F5443 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -287,8 +281,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+/* End PBXSourcesBuildPhase section */
 
 
+/* Begin PBXResourcesBuildPhase section */
 		76AC8AFC8F20478A84BE91F4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -298,6 +294,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
 
