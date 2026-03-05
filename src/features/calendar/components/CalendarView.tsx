@@ -6,7 +6,6 @@ import { LongPressGestureHandler, State } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ProgressiveBlur } from '@/components/ProgressiveBlur';
 import { useFocusHistory } from '@/features/calendar/store/useFocusHistory';
-import { useFocusModes } from '@/features/modes/store/useFocusModes';
 import { useUIStore } from '@/hooks/useUIStore';
 import * as haptics from '@/utils/haptics';
 import { FocusSession } from '@/lib/types';
@@ -104,6 +103,51 @@ const WeekPage = React.memo(({ week, selectedDate, onSelectDate }: { week: any[]
     );
 });
 
+/** Number of pages to render on each side of the current page */
+const PAGE_RENDER_WINDOW = 2;
+
+const SessionBlock = React.memo(function SessionBlock({
+    session,
+    onLongPress,
+}: {
+    session: FocusSession;
+    onLongPress: (session: FocusSession) => void;
+}) {
+    const sessionDate = new Date(session.startTime);
+    const hours = sessionDate.getHours();
+    const minutes = sessionDate.getMinutes();
+    const topOffset = (hours + minutes / 60) * HOUR_HEIGHT;
+    const height = Math.max(50, session.duration * (HOUR_HEIGHT / 60));
+
+    return (
+        <LongPressGestureHandler
+            onHandlerStateChange={(e) => {
+                if (e.nativeEvent.state === State.ACTIVE) {
+                    haptics.impactMedium();
+                    onLongPress(session);
+                }
+            }}
+            minDurationMs={500}
+        >
+            <View
+                style={[
+                    styles.sessionBlock,
+                    {
+                        top: topOffset,
+                        height,
+                        backgroundColor: session.color || '#0A84FF',
+                    }
+                ]}
+            >
+                <View style={styles.sessionInfo}>
+                    <Text style={styles.sessionModeTitle}>{session.modeTitle}</Text>
+                    <Text style={styles.sessionDuration}>{session.duration} min</Text>
+                </View>
+            </View>
+        </LongPressGestureHandler>
+    );
+});
+
 const WEEKS_DATA = (() => {
     const today = new Date();
     const currentMonday = getMonday(today);
@@ -128,6 +172,9 @@ export default function CalendarView() {
     const [selectedSession, setSelectedSession] = useState<FocusSession | null>(null);
     const [isReady, setIsReady] = useState(false);
     const scrollY = useSharedValue(0);
+
+    // Track current week page for windowed rendering
+    const [currentWeekPage, setCurrentWeekPage] = useState(50);
 
     const months = ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic'];
     const isTodaySelected = selectedDate.toDateString() === new Date().toDateString();
@@ -155,13 +202,15 @@ export default function CalendarView() {
         [sessions, selectedDateStr]
     );
 
+    const handleSessionLongPress = useCallback((session: FocusSession) => {
+        setSelectedSession(session);
+    }, []);
+
     const scrollHandler = useAnimatedScrollHandler({
         onScroll: (event) => {
             scrollY.value = event.contentOffset.y;
         },
     });
-
-    // Removed: headerAnimatedStyle was returning static {opacity: 1} — wasteful reanimated node.
 
     useEffect(() => {
         const handle = requestIdleCallback(() => {
@@ -196,42 +245,13 @@ export default function CalendarView() {
                     <View style={styles.timelineLayout}>
                         {hourRows}
                         <View style={styles.sessionsOverlay}>
-                            {filteredSessions.map(session => {
-                                const sessionDate = new Date(session.startTime);
-                                const hours = sessionDate.getHours();
-                                const minutes = sessionDate.getMinutes();
-                                const topOffset = (hours + minutes / 60) * HOUR_HEIGHT;
-                                const height = Math.max(50, session.duration * (HOUR_HEIGHT / 60));
-
-                                return (
-                                    <LongPressGestureHandler
-                                        key={session.id}
-                                        onHandlerStateChange={(e) => {
-                                            if (e.nativeEvent.state === State.ACTIVE) {
-                                                haptics.impactMedium();
-                                                setSelectedSession(session);
-                                            }
-                                        }}
-                                        minDurationMs={500}
-                                    >
-                                        <View
-                                            style={[
-                                                styles.sessionBlock,
-                                                {
-                                                    top: topOffset,
-                                                    height,
-                                                    backgroundColor: session.color || '#0A84FF',
-                                                }
-                                            ]}
-                                        >
-                                            <View style={styles.sessionInfo}>
-                                                <Text style={styles.sessionModeTitle}>{session.modeTitle}</Text>
-                                                <Text style={styles.sessionDuration}>{session.duration} min</Text>
-                                            </View>
-                                        </View>
-                                    </LongPressGestureHandler>
-                                );
-                            })}
+                            {filteredSessions.map(session => (
+                                <SessionBlock
+                                    key={session.id}
+                                    session={session}
+                                    onLongPress={handleSessionLongPress}
+                                />
+                            ))}
                         </View>
                     </View>
                 </Animated.ScrollView>
@@ -263,14 +283,18 @@ export default function CalendarView() {
                             ref={pagerRef}
                             style={styles.weekPager}
                             initialPage={50}
+                            offscreenPageLimit={1}
+                            onPageSelected={(e) => setCurrentWeekPage(e.nativeEvent.position)}
                         >
                             {WEEKS_DATA.map((week: any[], weekIx: number) => (
                                 <View key={weekIx}>
-                                    <WeekPage
-                                        week={week}
-                                        selectedDate={selectedDate}
-                                        onSelectDate={setSelectedDate}
-                                    />
+                                    {Math.abs(weekIx - currentWeekPage) <= PAGE_RENDER_WINDOW ? (
+                                        <WeekPage
+                                            week={week}
+                                            selectedDate={selectedDate}
+                                            onSelectDate={setSelectedDate}
+                                        />
+                                    ) : null}
                                 </View>
                             ))}
                         </PagerView>
