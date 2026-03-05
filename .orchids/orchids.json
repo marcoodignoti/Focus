@@ -1,9 +1,0 @@
-{
-  "projectId": "5bf869ad-eba1-43b3-80b8-363ddf1b48ec",
-  "createdAt": 1771631278500,
-  "version": "1.0",
-  "startupCommands": [
-    "npm install; node node_modules/expo/bin/cli start --web --port 8083"
-  ],
-  "templateId": "any"
-}

@@ -1,0 +1,193 @@
+```markdown
+# Best Practices per @gorhom/bottom-sheet nelle app Expo (v5+)
+
+**Riferimento principale**: [Documentazione ufficiale](https://gorhom.dev/react-native-bottom-sheet/)  
+**Versione consigliata**: sempre la `^5.x` (Reanimated 3 + Gesture Handler 2) – più stabile e performante.
+
+## 1. Installazione e Setup Expo (obbligatorio)
+
+```bash
+# Libreria principale
+npx expo install @gorhom/bottom-sheet
+
+# Dipendenze peer (usa sempre npx expo install!)
+npx expo install react-native-reanimated react-native-gesture-handler
+```
+
+**Configurazione obbligatoria**:
+
+1. **babel.config.js** (Reanimated plugin deve essere **l’ultimo**):
+   ```js
+   module.exports = function (api) {
+     api.cache(true);
+     return {
+       presets: ['babel-preset-expo'],
+       plugins: [
+         'react-native-reanimated/plugin', // ← DEVE essere l'ultimo!
+       ],
+     };
+   };
+   ```
+
+2. **App root** (o `_layout.tsx` con Expo Router):
+   ```tsx
+   import { GestureHandlerRootView } from 'react-native-gesture-handler';
+   import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+
+   export default function Root() {
+     return (
+       <GestureHandlerRootView style={{ flex: 1 }}>
+         <BottomSheetModalProvider>
+           {/* Tutto il resto dell'app */}
+         </BottomSheetModalProvider>
+       </GestureHandlerRootView>
+     );
+   }
+   ```
+
+> **Nota Expo**: con Expo SDK 49+ (Reanimated 3) funziona out-of-the-box. Con New Architecture (Fabric) alcuni sviluppatori segnalano leggeri lag al primo mount su iOS simulator – testare sempre su device fisico/release build.
+
+## 2. BottomSheet vs BottomSheetModal – Quando usare cosa
+
+| Caso d'uso                          | Componente consigliato     | Motivazione |
+|-------------------------------------|----------------------------|-------------|
+| Un solo sheet semplice              | `BottomSheet`              | Più leggero |
+| Più sheet diversi / stacking        | `BottomSheetModal` + `present()` | Unico provider, stack nativo, dismiss automatico |
+| Sheet che devono vivere fuori dalla navigazione | `BottomSheetModal` | Si posiziona sopra tutto |
+
+**Best practice community (GitHub #1507, Reddit)**:  
+**NON** fare conditional rendering di 5-10 `<BottomSheet />`.  
+Usa **un solo** `<BottomSheetModal>` e cambia il contenuto dinamicamente:
+
+```tsx
+const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+const [sheetData, setSheetData] = useState(null);
+
+const handlePresent = (data: any) => {
+  setSheetData(data);
+  bottomSheetModalRef.current?.present();
+};
+
+// Nel componente
+<BottomSheetModal
+  ref={bottomSheetModalRef}
+  snapPoints={snapPoints}
+  index={-1} // inizia chiuso
+>
+  {sheetData && <DynamicContent data={sheetData} />}
+</BottomSheetModal>
+```
+
+## 3. Snap Points & Dynamic Sizing
+
+```tsx
+const snapPoints = useMemo(() => ['25%', '50%', '90%'], []); // sempre memoizzato!
+
+// Per contenuto variabile (moduli, form, liste)
+<BottomSheet
+  enableDynamicSizing
+  maxDynamicContentSize={Dimensions.get('window').height * 0.9} // limite forte
+>
+  <BottomSheetView> {/* OBBLIGATORIO in v5 con dynamic sizing */} 
+    ...
+  </BottomSheetView>
+</BottomSheet>
+```
+
+**Regola d’oro**: `enableDynamicSizing={true}` → usa sempre `BottomSheetView` (non `<View>` normale).
+
+## 4. Contenuto interno – Scrollables
+
+Usa **sempre** i componenti forniti dalla libreria:
+
+- `BottomSheetScrollView`
+- `BottomSheetFlatList`
+- `BottomSheetSectionList`
+- `BottomSheetFlashList` (consigliato per performance)
+- `BottomSheetView` (per contenuto statico)
+
+```tsx
+<BottomSheetModal>
+  <BottomSheetFlashList
+    data={items}
+    renderItem={...}
+    estimatedItemSize={60}
+  />
+</BottomSheetModal>
+```
+
+**Perché?** Gestiscono correttamente i gesture simultanei con il pan del sheet.
+
+## 5. Keyboard Handling (forme e input)
+
+```tsx
+import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
+
+<BottomSheetModal
+  keyboardBehavior="interactive"        // o "extend" / "fillParent"
+  keyboardBlurBehavior="restore"
+  enableBlurKeyboardOnGesture={true}
+>
+  <BottomSheetTextInput placeholder="..." />
+</BottomSheetModal>
+```
+
+**Best practice**:
+- Usa sempre `BottomSheetTextInput` (gestisce automaticamente focus/blur).
+- Per `TextInput` custom copia `handleOnFocus` / `handleOnBlur` dal componente della lib.
+- Su Android imposta `android_keyboardInputMode="adjustResize"` se serve.
+
+## 6. Performance & Memory
+
+- **Un solo provider** a livello root.
+- Evita di montare tanti sheet contemporaneamente (causa memory leak v4, migliorato in v5 ma ancora presente).
+- `animateOnMount={false}` se non vuoi animazione al mount.
+- `overDragResistanceFactor={2}` per feel più “pesante”.
+- In Expo Router / React Navigation: posiziona il sheet **fuori** dal navigator o usa `detach` + `topInset`.
+
+## 7. Safe Area & Notch (iPhone Dynamic Island)
+
+```tsx
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+const insets = useSafeAreaInsets();
+
+<BottomSheetModal
+  topInset={insets.top}
+  bottomInset={insets.bottom}
+  // oppure paddingBottom sul contenuto
+>
+```
+
+## 8. Integrazione con Expo Router / React Navigation
+
+- Wrap il `_layout.tsx` con `BottomSheetModalProvider`.
+- Per sheet che devono stare sopra la tab bar: usa `BottomSheetModal` con `detached={true}` o posizionalo fuori dallo stack.
+- Esempio ufficiale: [NavigatorExample](https://github.com/gorhom/react-native-bottom-sheet/blob/master/example/src/screens/integrations/navigation/NavigatorExample.tsx).
+
+## 9. Common Pitfalls (da GitHub issues + community)
+
+| Problema                            | Soluzione |
+|-------------------------------------|---------|
+| Sheet non si chiude con `index={-1}` | Usa `ref.current?.dismiss()` o `close()` |
+| Lag primo apertura (New Arch)       | Testa su device fisico / `expo run:ios --configuration Release` |
+| Keyboard non sposta il sheet        | `keyboardBehavior="interactive"` + `BottomSheetTextInput` |
+| Content troppo alto con dynamic sizing | `maxDynamicContentSize` + `BottomSheetView` |
+| Molti sheet lenti                   | Passa a singolo `BottomSheetModal` + `present(data)` |
+| Gesture non funziona su Android     | Assicurati `GestureHandlerRootView` al 100% root |
+
+## 10. Accessibilità & Theming
+
+- `overrideReduceMotion="Always"` per test.
+- Usa `handleComponent` custom per handle più grande (migliore accessibilità).
+- Supporta dark mode nativamente (usa `useTheme` o `StyleSheet` dinamici).
+
+## Risorse utili
+
+- [Esempio ufficiale completo](https://github.com/gorhom/react-native-bottom-sheet/tree/master/example)
+- [Expo + Bottom Sheet demo](https://github.com/morrowdigital/react-native-bottom-sheet-example)
+- Discussioni community: GitHub Discussions #1507 (multiple sheets), #233 (keyboard)
+
+**Segui queste pratiche →** avrai sheet fluidi, performanti e mantenibili al 100% in produzione Expo.
+
+Creato febbraio 2026 – basato su docs ufficiali v5 + esperienze reali sviluppatori (GitHub, Reddit, StackOverflow).

@@ -36,12 +36,8 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
+app-example
+
 # generated native folders
 /ios
 /android
-
-# Development artifacts
-last_commit_diff.txt
-codebase.md
-expo-glass-effect.md
-.agents/
