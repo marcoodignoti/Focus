@@ -39,6 +39,7 @@ export default function RootLayout() {
                                 options={{
                                     headerShown: false,
                                     presentation: "transparentModal",
+                                    animation: "none",
                                     gestureEnabled: false,
                                     contentStyle: { backgroundColor: "transparent" },
                                 }}
@@ -48,6 +49,7 @@ export default function RootLayout() {
                                 options={{
                                     headerShown: false,
                                     presentation: "transparentModal",
+                                    animation: "none",
                                     gestureEnabled: false,
                                     contentStyle: { backgroundColor: "transparent" },
                                 }}
@@ -57,6 +59,7 @@ export default function RootLayout() {
                                 options={{
                                     headerShown: false,
                                     presentation: "transparentModal",
+                                    animation: "none",
                                     gestureEnabled: false,
                                     contentStyle: { backgroundColor: "transparent" },
                                 }}

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Dimensions, Pressable, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Animated, { useSharedValue, useAnimatedScrollHandler, FadeInDown, FadeOutUp } from 'react-native-reanimated';
+import Animated, { useSharedValue, useAnimatedScrollHandler } from 'react-native-reanimated';
 import { LongPressGestureHandler, State } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ProgressiveBlur } from '@/components/ProgressiveBlur';
@@ -25,6 +25,8 @@ const TIMELINE_START = 0;
 const TIMELINE_END = 24;
 
 const ITALIAN_DAYS = ['D', 'L', 'M', 'M', 'G', 'V', 'S'];
+
+const BLUR_OVERLAY_COLORS: [string, string] = ['rgba(53, 59, 96, 1)', 'rgba(53, 59, 96, 0.2)'];
 
 const getMonday = (d: Date) => {
     const date = new Date(d);
@@ -261,21 +263,16 @@ export default function CalendarView() {
                 <ProgressiveBlur
                     intensity={6}
                     tint="light"
-                    overlayColors={['rgba(53, 59, 96, 1)', 'rgba(53, 59, 96, 0.2)']}
+                    overlayColors={BLUR_OVERLAY_COLORS}
                 />
             </View>
 
             <View style={styles.headerContentContainer} pointerEvents="box-none">
                 <View style={[styles.header, { paddingTop: insets.top }]}>
                     <View style={styles.headerTop}>
-                        <Animated.Text
-                            key={todayDateStr}
-                            entering={FadeInDown.springify().damping(80)}
-                            exiting={FadeOutUp.duration(200)}
-                            style={styles.headerDate}
-                        >
+                        <Text style={styles.headerDate}>
                             {todayDateStr}
-                        </Animated.Text>
+                        </Text>
                     </View>
 
                     <View style={styles.weekStripContainer}>

@@ -26,7 +26,7 @@ export default function NewModeScreen() {
     const [name, setName] = useState('');
     const [selectedIcon, setSelectedIcon] = useState<keyof typeof Ionicons.glyphMap>('flash');
 
-    const { gesture, closeWithAnimation, animatedSheetStyle, animatedBackdropStyle } = useSheetAnimation(() => {
+    const { gesture, closeWithAnimation, animatedSheetStyle, animatedBackdropStyle, isReady } = useSheetAnimation(() => {
         router.back();
     });
 
@@ -124,12 +124,14 @@ export default function NewModeScreen() {
 
             <View style={styles.inputSection}>
                 <View style={styles.rulerContainer}>
-                    <RulerPicker
-                        containerWidth={SCREEN_WIDTH - 64}
-                        initialValue={25}
-                        sharedValue={sharedDuration}
-                        height={100}
-                    />
+                    {isReady ? (
+                        <RulerPicker
+                            containerWidth={SCREEN_WIDTH - 64}
+                            initialValue={25}
+                            sharedValue={sharedDuration}
+                            height={100}
+                        />
+                    ) : null}
                 </View>
             </View>
         </View>
