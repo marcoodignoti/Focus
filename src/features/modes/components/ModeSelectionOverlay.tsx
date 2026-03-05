@@ -397,17 +397,13 @@ export function ModeSelectionOverlay({
         >
             <Animated.View style={[StyleSheet.absoluteFill, animatedListStyle]}>
                 <ScrollView
-                    style={{ flex: 1 }}
-                    contentContainerStyle={{
-                        flexGrow: 1,
-                        justifyContent: 'center',
-                        paddingVertical: 100,
-                    }}
+                    style={styles.scrollView}
+                    contentContainerStyle={styles.scrollContent}
                     showsVerticalScrollIndicator={false}
                     keyboardShouldPersistTaps="handled"
                 >
                     <Pressable
-                        style={{ width: '100%', alignItems: 'center' }}
+                        style={styles.scrollPressable}
                         onPress={onClose}
                     >
                         <View style={styles.listContainer}>
@@ -451,22 +447,22 @@ export function ModeSelectionOverlay({
                                         ) : null
                                     }
                                 >
-                                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                                        <View style={{ width: '20%', alignItems: 'flex-start', justifyContent: 'center' }}>
-                                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                    <View style={styles.modeRow}>
+                                        <View style={styles.modeRowLeft}>
+                                            <View style={styles.modeIconRow}>
                                                 <Ionicons name={mode.icon} size={24} color={mode.id === activeModeId ? getIconColor(mode.icon) : "#ffffff"} style={{ opacity: mode.id === activeModeId ? 1 : 0.9 }} />
                                                 {mode.id === defaultModeId ? (
-                                                    <Ionicons name="star" size={12} color="rgba(255,215,0,0.8)" style={{ marginLeft: 4 }} />
+                                                    <Ionicons name="star" size={12} color="rgba(255,215,0,0.8)" style={styles.defaultStar} />
                                                 ) : null}
                                             </View>
                                         </View>
 
-                                        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                                            <Text style={[styles.modeName, mode.id === activeModeId ? { color: '#000000' } : null]} numberOfLines={1}>{mode.name}</Text>
-                                            <Text style={[styles.modeDuration, mode.id === activeModeId ? { opacity: 0.8, color: '#000000' } : null, { marginTop: 2, fontSize: 14 }]}>{mode.duration}:00</Text>
+                                        <View style={styles.modeRowCenter}>
+                                            <Text style={[styles.modeName, mode.id === activeModeId ? styles.modeNameActive : null]} numberOfLines={1}>{mode.name}</Text>
+                                            <Text style={[styles.modeDuration, mode.id === activeModeId ? styles.modeDurationActive : null]}>{mode.duration}:00</Text>
                                         </View>
 
-                                        <View style={{ width: '20%', alignItems: 'flex-end', justifyContent: 'center' }}>
+                                        <View style={styles.modeRowRight}>
                                             <Pressable
                                                 onPress={() => toggleEdit(mode.id)}
                                                 hitSlop={{ top: 15, bottom: 15, left: 15, right: 15 }}
@@ -485,24 +481,14 @@ export function ModeSelectionOverlay({
                                 isActive={false}
                                 onPress={handleOpenNewMode}
                                 glassEffect={false}
-                                style={{
-                                    backgroundColor: 'transparent',
-                                    marginBottom: 0,
-                                    marginTop: 12,
-                                    alignSelf: 'center',
-                                }}
-                                contentStyle={{
-                                    justifyContent: 'center',
-                                    height: 'auto',
-                                    paddingHorizontal: 20,
-                                    paddingVertical: 12,
-                                }}
+                                style={styles.newModeItem}
+                                contentStyle={styles.newModeContent}
                             >
-                                <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                                    <View style={[styles.newTagIconCircle, { marginRight: 0, marginBottom: 8, width: 48, height: 48, borderRadius: 24, backgroundColor: 'rgba(255, 255, 255, 0.2)' }]}>
+                                <View style={styles.newModeInner}>
+                                    <View style={styles.newModeIconCircle}>
                                         <Ionicons name="add" size={28} color="#ffffff" />
                                     </View>
-                                    <Text style={[styles.newTagText, { fontSize: 16, opacity: 0.8 }]}>New Mode</Text>
+                                    <Text style={styles.newModeText}>New Mode</Text>
                                 </View>
                             </AnimatedOverlayItem>
                         </View>
@@ -524,9 +510,10 @@ const styles = StyleSheet.create({
     },
     modeDuration: {
         color: '#ffffff',
-        fontSize: 16,
+        fontSize: 14,
         fontFamily: 'SF-Pro-Rounded-Semibold',
         opacity: 0.7,
+        marginTop: 2,
     },
     newTagIconCircle: {
         width: 32,
@@ -541,6 +528,84 @@ const styles = StyleSheet.create({
         color: '#ffffff',
         fontSize: 18,
         fontFamily: 'SF-Pro-Rounded-Semibold',
+    },
+    scrollView: {
+        flex: 1,
+    },
+    scrollContent: {
+        flexGrow: 1,
+        justifyContent: 'center' as const,
+        paddingVertical: 100,
+    },
+    scrollPressable: {
+        width: '100%',
+        alignItems: 'center' as const,
+    },
+    modeRow: {
+        flex: 1,
+        flexDirection: 'row' as const,
+        alignItems: 'center' as const,
+        justifyContent: 'space-between' as const,
+    },
+    modeRowLeft: {
+        width: '20%' as const,
+        alignItems: 'flex-start' as const,
+        justifyContent: 'center' as const,
+    },
+    modeIconRow: {
+        flexDirection: 'row' as const,
+        alignItems: 'center' as const,
+    },
+    defaultStar: {
+        marginLeft: 4,
+    },
+    modeRowCenter: {
+        flex: 1,
+        alignItems: 'center' as const,
+        justifyContent: 'center' as const,
+    },
+    modeNameActive: {
+        color: '#000000',
+    },
+    modeDurationActive: {
+        opacity: 0.8,
+        color: '#000000',
+    },
+    modeRowRight: {
+        width: '20%' as const,
+        alignItems: 'flex-end' as const,
+        justifyContent: 'center' as const,
+    },
+    newModeItem: {
+        backgroundColor: 'transparent',
+        marginBottom: 0,
+        marginTop: 12,
+        alignSelf: 'center' as const,
+    },
+    newModeContent: {
+        justifyContent: 'center' as const,
+        height: 'auto' as any,
+        paddingHorizontal: 20,
+        paddingVertical: 12,
+    },
+    newModeInner: {
+        alignItems: 'center' as const,
+        justifyContent: 'center' as const,
+    },
+    newModeIconCircle: {
+        width: 48,
+        height: 48,
+        borderRadius: 24,
+        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+        alignItems: 'center' as const,
+        justifyContent: 'center' as const,
+        marginBottom: 8,
+    },
+    newModeText: {
+        color: '#ffffff',
+        fontSize: 16,
+        fontFamily: 'SF-Pro-Rounded-Semibold',
+        opacity: 0.8,
     },
     expandedContent: {
         paddingBottom: 8,

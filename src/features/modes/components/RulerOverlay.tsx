@@ -152,7 +152,7 @@ export const RulerOverlay: React.FC<RulerOverlayProps> = ({
                         onPress={() => {
                             haptics.impactMedium();
                             onValueChange(Math.round(sharedValueRef.current));
-                            onClose();
+                            handleBackdropClose();
                         }}
                     >
                         <Text style={styles.doneButtonText}>Set Time</Text>
@@ -192,11 +192,16 @@ export const RulerOverlay: React.FC<RulerOverlayProps> = ({
         );
     };
 
+    // Non-worklet wrapper so the backdrop Pressable can call the animated close
+    const handleBackdropClose = () => {
+        handleClose();
+    };
+
     return (
         <View style={styles.root} pointerEvents={visible ? 'auto' : 'none'}>
             {/* Backdrop */}
             <Animated.View style={[StyleSheet.absoluteFill, animatedBackdropStyle]}>
-                <Pressable style={StyleSheet.absoluteFill} onPress={onClose}>
+                <Pressable style={StyleSheet.absoluteFill} onPress={handleBackdropClose}>
                     <View style={[StyleSheet.absoluteFill, { backgroundColor: 'rgba(0,0,0,0.4)' }]} />
                 </Pressable>
             </Animated.View>

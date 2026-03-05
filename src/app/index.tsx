@@ -35,6 +35,16 @@ function OverlayLayer() {
     const setCurrentMode = useFocusModes(state => state.setCurrentMode);
     const resetTimer = useFocusModes(state => state.resetTimer);
 
+    // Lazy mount: only mount RulerOverlay when it has been opened.
+    // Stays mounted while animating closed; unmounts after onClose fires.
+    const [rulerMounted, setRulerMounted] = useState(false);
+
+    useEffect(() => {
+        if (isRulerVisible) {
+            setRulerMounted(true);
+        }
+    }, [isRulerVisible]);
+
     function handleSelectMode(mode: FocusMode) {
         haptics.selection();
         setCurrentMode(mode);
@@ -58,12 +68,18 @@ function OverlayLayer() {
                 />
             ) : null}
 
-            <RulerOverlay
-                visible={isRulerVisible}
-                onClose={() => setRulerVisible(false)}
-                initialValue={currentMode.duration}
-                onValueChange={(val) => updateModeParams(currentMode.id, { duration: val })}
-            />
+            {rulerMounted ? (
+                <RulerOverlay
+                    visible={isRulerVisible}
+                    onClose={() => {
+                        // Safe to unmount: onClose fires after close animation completes
+                        setRulerVisible(false);
+                        setRulerMounted(false);
+                    }}
+                    initialValue={currentMode.duration}
+                    onValueChange={(val) => updateModeParams(currentMode.id, { duration: val })}
+                />
+            ) : null}
         </>
     );
 }
